@@ -1,0 +1,23 @@
+server:
+  port: 8001
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/coffeeshop_base"
+    username: "postgres"
+    password: "postgres"
+  jpa:
+    generate-ddl: true
+#  thymeleaf:
+#    suffix: .ftl
+  freemarker:
+    expose-request-attributes: true
+    suffix: .ftl
+
+#spring.main.allow-circular-references: true
+#
+#  spring.thymeleaf.prefix=classpath:/templates/
+#  spring.thymeleaf.suffix=.html
