@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.mirea.coffeeshop.entities.Item;
-import ru.mirea.coffeeshop.repositories.ItemRepository;
+import ru.mirea.coffeeshop.services.ItemService;
 
 import java.util.Map;
 
@@ -13,12 +13,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
     @GetMapping("/home")
     public String home(Map<String, Object> model) {
-        Iterable<Item> items = itemRepository.findAll();
+        Iterable<Item> items = itemService.getAllItems();
         model.put("items", items);
         return "home";
     }

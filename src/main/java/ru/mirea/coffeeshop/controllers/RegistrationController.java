@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.mirea.coffeeshop.entities.Role;
 import ru.mirea.coffeeshop.entities.User;
-import ru.mirea.coffeeshop.repositories.UserRepository;
+import ru.mirea.coffeeshop.services.UserService;
 
 import java.util.Collections;
 
@@ -15,7 +15,7 @@ import java.util.Collections;
 public class RegistrationController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/registration")
     public String registration() {
@@ -24,7 +24,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Model model) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+        User userFromDB = userService.getUserByUsername(user.getUsername());
 
         if (userFromDB != null) {
             model.addAttribute("message", "*User with this name exists!");
@@ -33,7 +33,7 @@ public class RegistrationController {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
+        userService.saveUser(user);
 
         model.addAttribute("message", "User was created!");
         return "redirect:/login";

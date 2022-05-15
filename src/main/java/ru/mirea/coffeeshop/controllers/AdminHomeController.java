@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.mirea.coffeeshop.entities.Item;
-import ru.mirea.coffeeshop.repositories.ItemRepository;
+import ru.mirea.coffeeshop.services.ItemService;
 
 import java.util.Map;
 
@@ -13,12 +13,13 @@ import java.util.Map;
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminHomeController {
+
     @Autowired
-    private ItemRepository itemRepository;
+    private ItemService itemService;
 
     @GetMapping("/home")
     public String home(Map<String, Object> model) {
-        Iterable<Item> items = itemRepository.findAll();
+        Iterable<Item> items = itemService.getAllItems();
         model.put("items", items);
         return "adminHome";
     }
@@ -36,9 +37,9 @@ public class AdminHomeController {
             Map<String, Object> model) {
 
         Item item = new Item(title, cost, description);
-        itemRepository.save(item);
+        itemService.saveItem(item);
 
-        Iterable<Item> items = itemRepository.findAll();
+        Iterable<Item> items = itemService.getAllItems();
         model.put("items", items);
         return "adminHome";
     }

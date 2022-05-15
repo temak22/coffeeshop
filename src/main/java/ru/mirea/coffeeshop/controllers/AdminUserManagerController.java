@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.mirea.coffeeshop.entities.Role;
 import ru.mirea.coffeeshop.entities.User;
-import ru.mirea.coffeeshop.repositories.UserRepository;
+import ru.mirea.coffeeshop.services.UserService;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 public class AdminUserManagerController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("")
     public String userList(Model model) {
         try {
-            model.addAttribute("users", userRepository.findAll());
+            model.addAttribute("users", userService.getAllUsers());
             return "userList";
         } catch (Exception e) {
             String errorTitle = "Ошибка 403";
@@ -69,7 +69,7 @@ public class AdminUserManagerController {
                     user.getRoles().add(Role.valueOf(key));
                 }
             }
-            userRepository.save(user);
+            userService.saveUser(user);
             return "redirect:/admin/user";
         } catch (Exception e) {
             String errorTitle = "Ошибка 403";

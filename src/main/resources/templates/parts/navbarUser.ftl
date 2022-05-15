@@ -14,7 +14,7 @@
                 </li>
                 <#if isAdmin!'false'>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/home">Admin Menu</a>
+                    <a class="nav-link" href="/admin/home"><u style="color: darkgray">Admin Menu</u></a>
                 </li>
                 </#if>
             </ul>
