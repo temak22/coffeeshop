@@ -59,11 +59,13 @@ public class AdminUserManagerController {
             Model model) {
         try {
             user.setUsername(username);
+
             Set<String> roles = Arrays.stream(Role.values())
                     .map(Role::name)
                     .collect(Collectors.toSet());
 
             user.getRoles().clear();
+            user.getRoles().add(Role.USER);
             for (String key : form.keySet()) {
                 if (roles.contains(key)) {
                     user.getRoles().add(Role.valueOf(key));

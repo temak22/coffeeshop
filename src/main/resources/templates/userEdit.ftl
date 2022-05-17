@@ -12,9 +12,15 @@
         <br><br>
         <#list roles as role>
             <#if name != user.username>
-                <div>
-                    <label><input type="checkbox" name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
-                </div>
+                <#if role == roles[0]>
+                    <div>
+                        <label><input type="checkbox" disabled="disabled" name="${role}" checked>${role}</label>
+                    </div>
+                <#else>
+                    <div>
+                        <label><input type="checkbox" name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
+                    </div>
+                </#if>
             </#if>
         </#list>
         <br>
